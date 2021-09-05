@@ -1,35 +1,20 @@
-// パーリンノイズウォーカー
-
-let walker;
+// ベクトルの大きさ
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
-	walker = new Walker();
-	for (let i = 0; i < 10000; i++) {
-		walker.step();
-		walker.display();
-	}
+	createCanvas(640, 360);
 }
 
-class Walker {
-	constructor() {
-		this.x;
-		this.y;
-		this.size;
-		this.tx = 0;
-		this.ty = 10000;
-		this.ts = 20000;
-	}
-	step() {
-		this.x = map(noise(this.tx), 0, 1, 0, width);
-		this.y = map(noise(this.ty), 0, 1, 0, height);
-		this.size = map(noise(this.ts), 0, 1, 10, 200);
-		this.tx += 0.01;
-		this.ty += 0.01;
-		this.ts += 0.01;
-	}
-	display() {
-		stroke(0, 80);
-		ellipse(this.x, this.y, this.size);
-	}
+function draw() {
+	background(200);
+	let mouse = createVector(mouseX, mouseY);
+	let center = createVector(width / 2, height / 2);
+	mouse.sub(center);
+
+	let m = mouse.mag(); // ベクトルの長さはmagで求める
+	fill(0);
+	rect(0, 0, m, 10);
+	text(`ベクトルの長さ：${m}`, 10, 30);
+
+	translate(width / 2, height / 2);
+	line(0, 0, mouse.x, mouse.y);
 }

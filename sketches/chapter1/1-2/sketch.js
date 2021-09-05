@@ -1,25 +1,26 @@
-// フレーム更新毎にランダムに選ばれたrandomCounts配列のキーの値がインクリメントされる
-// 結果を見ると、random関数は数値を均等に生成することがわかる
+// バウンドするボール（ベクトルを使った場合）
 
-let randomCounts = [];
-let total = 20;
+let loc; // 位置
+let velo // 速度
 
 function setup() {
 	createCanvas(640, 360);
-	background(255);
-	for (let i = 0; i < total; i++) {
-		randomCounts[i] = 0;
-	}
+	loc = createVector(100, 100);
+	velo = createVector(5, 5);
 }
 
 function draw() {
 	background(200);
-	let index = int(random(randomCounts.length));
-	randomCounts[index]++;
+	loc.add(velo);
+
+	if ((loc.x > width) || (loc.x < 0)) {
+		velo.x = velo.x * -1;
+	}
+	if ((loc.y > height) || (loc.y < 0)) {
+		velo.y = velo.y * -1;
+	}
+
 	stroke(0);
-	fill(175);
-	let w = width / randomCounts.length;
-	randomCounts.forEach((_, x) => {
-		rect(x * w, height - randomCounts[x], w, randomCounts[x]);
-	});
+	fill(0);
+	ellipse(loc.x, loc.y, 16);
 }

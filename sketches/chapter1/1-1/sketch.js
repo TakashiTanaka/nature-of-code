@@ -1,44 +1,27 @@
-// 上・下・左・右の4方向に進むランダムウォーカー
+// バウンドするボール（ベクトルを使わない場合）
 
-let walker;
-
-const drawFrame = () => {
-	noFill();
-	stroke(0);
-	rect(0, 0, 640, 360);
-}
+let x = 100;
+let y = 100;
+let xSpeed = 1;
+let ySpeed = 3.3;
 
 function setup() {
 	createCanvas(640, 360);
-	background(255);
-	walker = new Walker();
 }
 
 function draw() {
-	drawFrame();
-	walker.step();
-	walker.display();
-}
+	background(200);
+	x = x + xSpeed;
+	y = y + ySpeed;
 
-class Walker {
-	constructor() {
-		this.x = width / 2;
-		this.y = height / 2;
+	if ((x > width) || (x < 0)) {
+		xSpeed = xSpeed * -1;
 	}
-	display() {
-		stroke(0);
-		point(this.x, this.y);
+	if ((y > height) || (y < 0)) {
+		ySpeed = ySpeed * -1;
 	}
-	step() {
-		let choice = int(random(4));
-		if (choice === 0) {
-			this.x++;
-		} else if (choice === 1) {
-			this.x--;
-		} else if (choice === 2) {
-			this.y++;
-		} else {
-			this.y--;
-		}
-	}
+
+	stroke(0);
+	fill(0);
+	ellipse(x, y, 16);
 }
